@@ -1,0 +1,219 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+class Node {
+public:
+	string data;
+	Node* prev;
+	Node* next;
+};
+
+class DList {
+private:
+	Node* head;
+	Node* tail;
+public:
+	Node* Get_Head() {
+		return head;
+	}
+	DList() {
+		head = NULL;
+		tail = NULL;
+
+		
+	}
+
+	~DList() {
+		delete head;
+		delete tail;
+	}
+
+	void addFirst(string s) {
+		Node* tmp = new Node;
+		tmp->data = s;
+		tmp->next = head;
+		tmp->prev = NULL;
+
+		head = tmp;
+	}
+
+	void addLast(string s) {
+		Node* tmp = new Node;
+		tmp->data = s;
+		tmp->next = NULL;
+		if (head == NULL) {
+			head = tmp;
+			tail = tmp;
+		}
+		else {
+			tail = head;
+			while (tail->next != NULL) {
+				tail = tail->next;
+			}
+			tail->next = tmp;
+			tmp->prev = tail;
+			tail = tmp;
+		}
+	}
+
+	void printf() {
+		Node* temp = head;
+		if (temp == NULL)cout << "Linked list is empty";
+		while (temp != NULL) {
+			cout << temp->data << " ";
+			temp = temp->next;
+		}
+		cout << endl;
+	}
+
+	void removeFirst() {
+		if (head == NULL) {
+			cout << "Linked list is empty" << endl;
+		}
+		else {
+			Node* temp = head;
+			head = head->next;
+			head->prev = NULL;
+			delete temp;
+		}
+	}
+
+	void removeLast() {
+		if (head == NULL) {
+			cout << "Linked list is empty" << endl;
+		}
+		else {
+			Node* second_last = head;
+			while (second_last->next->next != NULL) {
+				second_last = second_last->next;
+			}
+			delete (second_last->next);
+			second_last = NULL;
+		}
+	}
+
+	void destructor() {
+		Node* temp;
+		while (head != NULL) {
+			temp = head;
+			head = head->next;
+			delete temp;
+
+		}
+	}
+
+	void insertAfter(Node* p, const char* s) {
+		Node* temp = new Node;
+		temp->data = s;
+		p->next->prev = temp;
+		temp->next = p->next;
+		temp->prev = p;
+
+		p->next = temp;
+
+	}
+
+
+
+};
+
+void TestA1() {
+	string s;
+
+	DList TestA1;
+
+	cin >> s;
+	TestA1.addFirst(s);
+	TestA1.printf();
+
+	cin >> s;
+	TestA1.addLast(s);
+	TestA1.printf();
+}
+
+void TestA2() {
+	string s;
+	cin >> s;
+	DList TestA2;
+
+	for (int i = 0; i < 3; i++) {
+		TestA2.addFirst(s);
+	}
+	TestA2.printf();
+
+	TestA2.removeFirst();
+	TestA2.printf();
+	TestA2.removeFirst();
+	TestA2.printf();
+	TestA2.removeFirst();
+	TestA2.printf();
+
+}
+
+void TestA3() {
+	string s;
+
+	cin >> s;
+	DList TestA3;
+
+	for (int i = 0; i < 3; i++) {
+		TestA3.addFirst(s);
+	}
+	TestA3.printf();
+	TestA3.destructor();
+	TestA3.printf();
+}
+
+void TestA4() {
+	string s;
+	cin >> s;
+	DList TestA4;
+
+	for (int i = 0; i < 4; i++) {
+		TestA4.addFirst(s);
+	}
+	TestA4.printf();
+
+	TestA4.removeFirst();
+	TestA4.printf();
+	TestA4.removeFirst();
+	TestA4.printf();
+	TestA4.removeFirst();
+	TestA4.printf();
+	TestA4.removeFirst();
+	TestA4.printf();
+}
+
+void TestA5() {
+	string s;
+
+	cin >> s;
+	DList TestA5;
+
+	for (int i = 0; i < 3; i++) {
+		TestA5.addFirst(s);
+	}
+
+	TestA5.printf();
+
+	Node* p = TestA5.Get_Head()->next->next;
+	TestA5.insertAfter(p, "insert");
+	TestA5.printf();
+}
+
+
+
+
+int main() {
+
+	TestA1();
+	TestA2();
+	TestA3();
+	TestA4();
+	TestA5();
+
+
+
+	return 0;
+}
